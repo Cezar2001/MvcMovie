@@ -1,0 +1,73 @@
+﻿@using MvcMovie.Models
+@using Microsoft.AspNetCore.Html
+
+@{
+    ViewBag.Title = "Tabella con i film disponibili";
+    ViewBag.TitoloPagina = "Il mio Movie Store";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    string[] TableHeaders = new string[] { "Poster","MovieID", "Titolo", "Genere", "Prezzo" };
+        
+    Func<dynamic, IHtmlContent> StampaMainTitolo(string sTitolo) =>
+        @<h1>@sTitolo
+        </h1>;
+
+    Func<dynamic, IHtmlContent> StampaRigaTabella(Movie mMovie) =>
+    @<tr>
+        <td class="image"><img class="post-list-image" src="@mMovie.Photo"></td>
+        <td>@mMovie.Id</td>
+        <td>@mMovie.Title</td>
+        <td>@mMovie.Genre</td>
+        <td>@mMovie.Price</td>
+    </tr>;
+}
+
+@StampaMainTitolo("Titolo Magico")(null)
+
+<h2>Lista Movies il giorno @DateTime.Now.ToShortDateString()</h2>
+
+<div class="table">
+    <table class="table table-bordered table-hover">
+        
+        <thead>
+            <tr>
+                @{
+                    foreach (var head in TableHeaders)
+                    {
+                        <th>
+                            @head
+                        </th>
+                    }
+                }
+            </tr>
+        </thead>
+
+        <tbody>
+            @{
+                //string Titolo, MovieID, Genere, Prezzo, Foto;
+                if (Model != null)
+                {
+                    foreach (var data in Model)
+                    {
+                        @StampaRigaTabella((MvcMovie.Models.Movie)data)(null);
+
+                        //MovieID = Convert.ToString(((MvcMovie.Models.Movie)data).Id);
+                        //Titolo = ((MvcMovie.Models.Movie)data).Title;
+                        //Genere = ((MvcMovie.Models.Movie)data).Genre;
+                        //Prezzo = Convert.ToString(((MvcMovie.Models.Movie)data).Price);
+                        //Foto = ((MvcMovie.Models.Movie)data).Photo;
+
+                        //<tr>
+                        //    <td class="image"><img class="post-list-image" src="@Foto"></td>
+                        //    <td>@MovieID</td>
+                        //    <td>@Titolo</td>
+                        //    <td>@Genere</td>
+                        //    <td>@Prezzo</td>
+                        //</tr>
+                    }
+                }
+            }
+        </tbody>
+
+    </table>
+</div>
+

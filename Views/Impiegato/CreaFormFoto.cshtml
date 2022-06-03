@@ -1,0 +1,62 @@
+﻿@model MvcMovie.Models.ImpiegatoFile;
+@{
+    ViewData["Title"] = "Crea Tessera";
+    ViewBag.TitoloPagina = "Creazione Tessera Impiegato";
+}
+
+  @using (Html.BeginForm("CreaSchedaFoto", "Impiegato", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        //@Html.ValidationSummary()
+        <table cellpadding="0" cellspacing="0" class="center">
+            <tr>
+                <th colspan="2" align="center">Person Details</th>
+            </tr>
+            <tr>
+                <td>PersonId: </td>
+                <td>
+                    @Html.TextBoxFor(m => m.Id)
+                </td>
+            </tr>
+            <tr>
+                <td>Name: </td>
+                <td>
+                    @Html.TextBoxFor(m => m.FullName)
+                    @Html.ValidationMessage("FullName")
+                </td>
+            </tr>
+            <tr>
+                <td>Gender: </td>
+                <td>
+                    @Html.DropDownListFor(m => m.Gender, new List<SelectListItem>
+                    { new SelectListItem{Text="Male", Value="M"},
+                      new SelectListItem{Text="Female", Value="F"}}, "Please select")
+                </td>
+            </tr>
+            <tr>
+                <td>City: </td>
+                <td>
+                    @Html.TextBoxFor(m => m.City)
+                    @Html.ValidationMessage("City")
+                </td>
+            </tr>
+            <tr>
+                <td>Email Address: </td>
+                <td>
+                    @Html.TextBoxFor(m => m.EmailAddress)
+                    @Html.ValidationMessage("EmailAddress")
+                </td>
+            </tr>
+
+             <tr>
+                <td>Photo: </td>
+                <td>
+                    @Html.TextBoxFor(m => m.File, new {type = "file"})
+                </td>
+            </tr>
+            
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Submit"/></td>
+            </tr>
+        </table>
+    }

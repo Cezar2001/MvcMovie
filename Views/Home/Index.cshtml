@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    ViewBag.TitoloPagina = "Buongiorno a tutti";
+
+    Func<dynamic, IHtmlContent> CreaLink(string sTesto, string sController, string sAction) =>
+        @<h2>@Html.ActionLink(sTesto, sAction, sController)</h2>;
+}
+
+<h2><a href="@Url.Action("ShowMovie, Movie")">Mostra film</a></h2>
+
+<h2><a href="/Impiegato/CreaForm">Crea tessera impiegato</a></h2>
+
+<h2>@Html.ActionLink("Crea una tessera con foto", "CreaFormFoto", "Impiegato")</h2>
+
+<h2>@Html.ActionLink("Prova i parametri", "ProvaParametri", "Movie", new Dictionary<string, object> {
+    {"Nome", "Mario" },
+    {"Cognome", "Rossi"} })</h2>
+
+@CreaLink("Link con CreaLink", "Movie", "ShowMovie")(null);
