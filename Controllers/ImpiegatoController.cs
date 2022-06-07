@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MvcMovie.Models;
+using System.Net;
 
 namespace MvcMovie.Controllers
 {
@@ -99,6 +100,43 @@ namespace MvcMovie.Controllers
                 AlternateText = "Foto non disponibile",
             };
             return View(VeroImpiegato);
+        }
+
+        public IActionResult CreaFormPut()
+        {
+            var request = (HttpWebRequest)WebRequest.Create("https://localhost:7090/Impiegato/InserisciDirigente");
+            
+            var postData = "NomeDir=" + Uri.EscapeDataString("Mario");
+            postData += "&CognomeDir=" + Uri.EscapeDataString("Rossi");
+            var data = System.Text.Encoding.ASCII.GetBytes(postData);
+
+            request.Method = "PUT";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = data.Length;
+
+            using (var stream = request.GetRequestStream())
+            {
+                stream.Write(data, 0, data.Length);
+            }
+
+            var response = (HttpWebResponse)request.GetResponse();
+            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+            
+            EsitoOperazionePut Esito = new EsitoOperazionePut();
+            Esito.sEsito = responseString;
+            ViewData["Message"] = "Risposta del server";
+            return View(Esito);
+        }
+
+        [HttpPut]
+        public string InserisciDirigente(string sData)
+        {
+            string sAppo = Request.Method;
+
+            if(sAppo == "PUT")
+                return "Dirigente inserito correttamente";
+            else
+                return "Errore inserimento dirigente";
         }
     }
 }

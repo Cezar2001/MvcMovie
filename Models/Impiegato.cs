@@ -49,4 +49,9 @@ namespace MvcMovie.Models
         public string AlternateText { get; set; }
         public IFormFile File { get; set; }
     }
+
+    public class EsitoOperazionePut
+    {
+        public string sEsito { get; set; }
+    }
 }
